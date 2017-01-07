@@ -1,0 +1,64 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:p="http://primefaces.org/ui">
+
+<head>
+    <title>Restaurants</title>
+</head>
+<body>
+<h1>
+    List of Restaurants
+</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>State</th>
+        <th>Phone</th>
+        <th>Cuisine</th>
+        <th>Rating</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="restaurant : ${list}">
+        <td th:text="${restaurant.restaurantName}"></td>
+        <td th:text="${restaurant.address}"></td>
+        <td th:text="${restaurant.state}"></td>
+        <td th:text="${restaurant.phone}"></td>
+        <td th:text="${restaurant.cuisineType}"></td>
+        <td th:text="${restaurant.rating}"></td>
+        <td>
+            <a href="restaurant.html"
+               th:href="@{|/restaurant/${restaurant.restaurantId}|}"
+               th:text="Rate">Rate</a>
+        </td>
+
+    </tr>
+
+    </tbody>
+</table>
+
+<!--<p:dataTable var="restaurant" value="#{list}">
+    <p:column headerText="Name">
+        <h:outputText value="#{restaurant.restaurantName}" />
+    </p:column>
+
+    <p:column headerText="Address">
+        <h:outputText value="#{restaurant.address}" />
+    </p:column>
+
+    <p:column headerText="State">
+        <h:outputText value="#{restaurant.state}" />
+    </p:column>
+
+    <p:column headerText="Cuisine">
+        <h:outputText value="#{restaurant.cuisineType}" />
+    </p:column>
+</p:dataTable>-->
+</body>
+
+</html>

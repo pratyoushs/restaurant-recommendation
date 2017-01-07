@@ -1,0 +1,45 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:p="http://primefaces.org/ui">
+
+<head>
+    <title>Restaurants</title>
+</head>
+<body>
+<h1>
+    List of Restaurants
+</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>State</th>
+        <th>Phone</th>
+        <th>Cuisine</th>
+        <th>Rating</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="restaurant : ${list}">
+        <td th:text="${restaurant.restaurantName}"></td>
+        <td th:text="${restaurant.address}"></td>
+        <td th:text="${restaurant.state}"></td>
+        <td th:text="${restaurant.phone}"></td>
+        <td th:text="${restaurant.cuisineType}"></td>
+        <td th:text="${restaurant.rating}"></td>
+    </tr>
+
+    </tbody>
+</table>
+<form th:each="restaurant: ${list}" th:action="@{|/restaurant/giverating/${restaurant.restaurantId}|}" action="dummy.html" method="post">
+    <label for="ratingval">Rating:</label>
+    <input type="text"  id="ratingval" name="ratingval"/>
+    <input type="submit" value="Submit"/>
+</form>
+</body>
+
+</html>
