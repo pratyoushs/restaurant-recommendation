@@ -27,15 +27,14 @@ public class RestaurantController {
         return "restaurants";
     }
 
-    @RequestMapping(value = "/restaurants", method = RequestMethod.POST)
+    @RequestMapping(value = {"/restaurants"}, method = RequestMethod.POST)
     public String restaurant(@ModelAttribute RestaurantSearch restaurantSearch, Model model){
         String restaurantName = (".*")+(restaurantSearch.getRestaurantName() == null ? "" : restaurantSearch.getRestaurantName()+(".*"));
         String cuisine = (".*")+(restaurantSearch.getCuisineType() == null ? "" : restaurantSearch.getCuisineType()+(".*"));
-        String location = (".*")+(restaurantSearch.getState() == null ? "" : restaurantSearch.getState()+(".*"));
-        String rating = (".*") + (restaurantSearch.getRating() == null? "" : restaurantSearch.getRating()+(".*"));
-        System.out.println(restaurantName + " " + cuisine + " " + location + " " + rating);
+        String state = (".*")+(restaurantSearch.getState() == null ? "" : restaurantSearch.getState()+(".*"));
+        String rating = (".*") + (restaurantSearch.getRating() == null? "" : restaurantSearch.getRating());
         model.addAttribute("list", restaurantRepository.getRestaurantDetails(
-                restaurantName, cuisine, location, rating));
+                restaurantName, cuisine, state, rating));
         return "restaurants";
     }
     @RequestMapping(value = "/restaurant/{id}", method = RequestMethod.GET)
@@ -54,9 +53,22 @@ public class RestaurantController {
 
     @RequestMapping(value = "/recommendations/{id}", method = RequestMethod.GET)
     public String recommendations(Model model, @PathVariable String id){
+        model.addAttribute("restaurantSearch", new RestaurantSearch());
         model.addAttribute("list", restaurantRepository.getRestaurantRecommendations(id));
         return "recommendations";
     }
+
+    @RequestMapping(value = "/recommendations/{id}", method = RequestMethod.POST)
+    public String recommendations(@ModelAttribute RestaurantSearch restaurantSearch, Model model, @PathVariable String id){
+        String restaurantName = (".*")+(restaurantSearch.getRestaurantName() == null ? "" : restaurantSearch.getRestaurantName()+(".*"));
+        String cuisine = (".*")+(restaurantSearch.getCuisineType() == null ? "" : restaurantSearch.getCuisineType()+(".*"));
+        String state = (".*")+(restaurantSearch.getState() == null ? "" : restaurantSearch.getState()+(".*"));
+        String rating = (".*") + (restaurantSearch.getRating() == null? "" : restaurantSearch.getRating());
+        model.addAttribute("list", restaurantRepository.getRestaurantRecommendations(
+                id, restaurantName, cuisine, state, rating));
+        return "recommendations";
+    }
+
 
     @RequestMapping(value = "/restaurant/giverating/{id}", method = RequestMethod.POST)
     public String dummy(@RequestParam("ratingval") String ratingval, @PathVariable String id, Model model){

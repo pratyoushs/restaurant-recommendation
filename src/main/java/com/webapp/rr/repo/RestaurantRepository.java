@@ -72,8 +72,19 @@ public interface RestaurantRepository extends GraphRepository<Restaurant> {
             "RETURN DISTINCT r2.restaurantName as restaurantName, r2.address as address, r2.phone as phone, " +
             "c.cuisineType as cuisineType, location.state as state, location.pin as pin, r2.rating as rating, " +
             "r2.restaurantId as restaurantId ORDER BY r2.rating DESC\n" +
-            "LIMIT 5")
+            "LIMIT 10")
     List<RestaurantDetails> getRestaurantRecommendations(String userId);
+
+    @Query("MATCH (u:User)-[l:Likes]->(r:Restaurant) WITH u, collect(r.restaurantId) as rid " +
+            "MATCH (u:User)-[l:Likes]->(r:Restaurant),(r)-[s:Serves]->(c:Cuisine)<-[:Serves]-(r2:Restaurant), " +
+            "(r)-[:Located_At]->(location) WHERE r2.rating >= \"3\" AND l.rating >= \"3\" AND r.locationId = r2.locationId " +
+            "AND r2.restaurantName =~ {1} AND c.cuisineType =~{2} AND location.state =~ {3} AND r2.rating =~ {4} " +
+            "AND u.userId = {0} AND NOT(r2.restaurantId IN rid) WITH r,r2,c,location,rid " +
+            "RETURN DISTINCT r2.restaurantName as restaurantName, r2.address as address, r2.phone as phone, " +
+            "c.cuisineType as cuisineType, location.state as state, location.pin as pin, r2.rating as rating, " +
+            "r2.restaurantId as restaurantId ORDER BY r2.rating DESC\n" +
+            "LIMIT 10")
+    List<RestaurantDetails> getRestaurantRecommendations(String userId, String restaurantName, String cuisine, String state, String rating);
 
     //Merges/Creates a rating given by a user to restaurant
     @Query ("MATCH (u:User{userId:{0}}),(r:Restaurant{restaurantId:{1}}) " +
