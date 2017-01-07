@@ -5,42 +5,50 @@
 
 <head>
     <title>Restaurants</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <div th:include="/header"></div>
 <body>
-<h1>
-    List of Restaurants
-</h1>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Address</th>
-        <th>State</th>
-        <th>Phone</th>
-        <th>Cuisine</th>
-        <th>Rating</th>
-    </tr>
-    </thead>
-    <tbody>
+<div class="container">
+    <div class="row">
+        <h1 class="col-sm-offset-5 col-sm-4">
+            Restaurant Details
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="panel panel-default" th:each="restaurant: ${list}">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="${restaurant.restaurantName}"></h3>
+                </div>
+                <div class="panel-body">
+                    <b><span>Address: </span></b><p th:text="${restaurant.address}"></p>
+                    <b><span>State: </span></b><p th:text="${restaurant.state}"></p>
+                    <b><span>Phone: </span></b><p th:text="${restaurant.phone}"></p>
+                    <b><span>Cuisine: </span></b><p th:text="${restaurant.cuisineType}"></p>
+                    <b><span>Rating: </span></b><p th:text="${restaurant.rating}"></p>
+                </div>
+                <div class="panel-footer">
+                    <form class="form-inline" th:action="@{|/restaurant/giverating/${restaurant.restaurantId}|}" action="dummy.html" method="post">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Give a Rating" type="text"  id="ratingval" name="ratingval"/>
+                        </div>
+                        <input class="btn btn-default" type="submit" value="Rate"/>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-    <tr th:each="restaurant : ${list}">
-        <td th:text="${restaurant.restaurantName}"></td>
-        <td th:text="${restaurant.address}"></td>
-        <td th:text="${restaurant.state}"></td>
-        <td th:text="${restaurant.phone}"></td>
-        <td th:text="${restaurant.cuisineType}"></td>
-        <td th:text="${restaurant.rating}"></td>
-    </tr>
-
-    </tbody>
-</table>
-<form th:each="restaurant: ${list}" th:action="@{|/restaurant/giverating/${restaurant.restaurantId}|}" action="dummy.html" method="post">
-    <label for="ratingval">Rating:</label>
-    <input type="text"  id="ratingval" name="ratingval"/>
-    <input type="submit" value="Submit"/>
-</form>
+    </div>
+</div>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Load jQuery -->
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
-
 </html>
