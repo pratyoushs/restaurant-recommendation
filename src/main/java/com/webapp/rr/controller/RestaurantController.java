@@ -47,7 +47,18 @@ public class RestaurantController {
 
     @RequestMapping(value = "/friendrecommendations/{id}", method = RequestMethod.GET)
     public String friendrecommendations(Model model, @PathVariable String id){
+        model.addAttribute("restaurantSearch", new RestaurantSearch());
         model.addAttribute("list", restaurantRepository.getFriendRecommendedRestaurants(id));
+        return "friendrecommendations";
+    }
+
+    @RequestMapping(value = "/friendrecommendations/{id}", method = RequestMethod.POST)
+    public String friendrecommendations(@ModelAttribute RestaurantSearch restaurantSearch, Model model, @PathVariable String id){
+        String restaurantName = (".*")+(restaurantSearch.getRestaurantName() == null ? "" : restaurantSearch.getRestaurantName()+(".*"));
+        String cuisine = (".*")+(restaurantSearch.getCuisineType() == null ? "" : restaurantSearch.getCuisineType()+(".*"));
+        String state = (".*")+(restaurantSearch.getState() == null ? "" : restaurantSearch.getState()+(".*"));
+        String rating = (".*") + (restaurantSearch.getRating() == null? "" : restaurantSearch.getRating());
+        model.addAttribute("list", restaurantRepository.getFriendRecommendedRestaurants(id, restaurantName, cuisine, state, rating));
         return "friendrecommendations";
     }
 

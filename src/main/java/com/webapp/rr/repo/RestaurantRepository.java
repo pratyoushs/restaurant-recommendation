@@ -53,16 +53,22 @@ public interface RestaurantRepository extends GraphRepository<Restaurant> {
     List<RestaurantDetails> getRestaurantInfo(String restaurantId);
 
     //restaurants liked by friends
-    @Query("MATCH (u:User)-[:Friend_Of]->(friend), " +
-            "      (friend)-[:Likes]->(r:Restaurant), " +
-            "      (r)-[:Located_At]->(location:Location), " +
-            "      (r)-[:Serves]->(c:Cuisine) " +
-            "WHERE u.userId = {0} " +
+    @Query("MATCH (u:User)-[:Friend_Of]->(friend), (friend)-[:Likes]->(r:Restaurant), " +
+            "(r)-[:Located_At]->(location:Location), (r)-[:Serves]->(c:Cuisine) " +
             "RETURN r.restaurantName as restaurantName, r.address as address, r.phone as phone, " +
             "c.cuisineType as cuisineType, location.state as state, location.pin as pin, r.rating as rating, " +
             "r.restaurantId as restaurantId ORDER BY r.rating DESC " +
-            "LIMIT 5")
+            "LIMIT 10")
     List<RestaurantDetails> getFriendRecommendedRestaurants(String userId);
+
+    @Query("MATCH (u:User)-[:Friend_Of]->(friend), (friend)-[:Likes]->(r:Restaurant), " +
+            "(r)-[:Located_At]->(location:Location), (r)-[:Serves]->(c:Cuisine) " +
+            "WHERE u.userId = {0} AND r.restaurantName =~ {1} AND c.cuisineType =~{2} AND location.state =~ {3} AND r.rating =~ {4} " +
+            "RETURN r.restaurantName as restaurantName, r.address as address, r.phone as phone, " +
+            "c.cuisineType as cuisineType, location.state as state, location.pin as pin, r.rating as rating, " +
+            "r.restaurantId as restaurantId ORDER BY r.rating DESC " +
+            "LIMIT 10")
+    List<RestaurantDetails> getFriendRecommendedRestaurants(String userId, String restaurantName, String cuisine, String state, String rating);
 
     //restaurant recommendations based on your likes
     @Query("MATCH (u:User)-[l:Likes]->(r:Restaurant) WITH u, collect(r.restaurantId) as rid " +
