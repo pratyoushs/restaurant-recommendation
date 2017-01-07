@@ -2,6 +2,7 @@ package com.webapp.rr.controller;
 
 import com.webapp.rr.domain.Restaurant;
 import com.webapp.rr.domain.RestaurantDetails;
+import com.webapp.rr.domain.RestaurantSearch;
 import com.webapp.rr.repo.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,22 @@ public class RestaurantController {
     @RequestMapping(value = "/restaurants", method = RequestMethod.GET)
     public String restaurant(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model){
         //return restaurantRepository.getRestaurantDetails();
+        model.addAttribute("restaurantSearch", new RestaurantSearch());
         model.addAttribute("list", restaurantRepository.getRestaurantDetails());
         return "restaurants";
     }
 
+    @RequestMapping(value = "/restaurants", method = RequestMethod.POST)
+    public String restaurant(@ModelAttribute RestaurantSearch restaurantSearch, Model model){
+        String restaurantName = (".*")+(restaurantSearch.getRestaurantName() == null ? "" : restaurantSearch.getRestaurantName()+(".*"));
+        String cuisine = (".*")+(restaurantSearch.getCuisineType() == null ? "" : restaurantSearch.getCuisineType()+(".*"));
+        String location = (".*")+(restaurantSearch.getState() == null ? "" : restaurantSearch.getState()+(".*"));
+        String rating = (".*") + (restaurantSearch.getRating() == null? "" : restaurantSearch.getRating()+(".*"));
+        System.out.println(restaurantName + " " + cuisine + " " + location + " " + rating);
+        model.addAttribute("list", restaurantRepository.getRestaurantDetails(
+                restaurantName, cuisine, location, rating));
+        return "restaurants";
+    }
     @RequestMapping(value = "/restaurant/{id}", method = RequestMethod.GET)
     public String restaurant(Model model, @PathVariable String id){
         String ratingval = null;

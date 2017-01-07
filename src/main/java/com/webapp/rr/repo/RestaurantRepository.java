@@ -32,11 +32,18 @@ public interface RestaurantRepository extends GraphRepository<Restaurant> {
     List<AverageRating> getAverageRating();*/
 
     //Returns all the restaurants with its details, cuisine served and location located_at.
-    @Query("MATCH (r)-[s:Serves]->(c:Cuisine), (r)-[loc:Located_At]->(location:Location)" +
+    @Query("MATCH (r)-[s:Serves]->(c:Cuisine), (r)-[loc:Located_At]->(location:Location) " +
             " RETURN DISTINCT r.restaurantName as restaurantName, r.address as address, r.phone as phone, " +
             "c.cuisineType as cuisineType, location.state as state, location.pin as pin, r.rating as rating, " +
             "r.restaurantId as restaurantId limit 100")
     List<RestaurantDetails> getRestaurantDetails();
+
+    @Query("MATCH (r)-[s:Serves]->(c:Cuisine), (r)-[loc:Located_At]->(location:Location) " +
+            "WHERE r.restaurantName =~{0} AND c.cuisineType =~{1} AND location.state =~ {2} AND r.rating =~ {3} " +
+            " RETURN DISTINCT r.restaurantName as restaurantName, r.address as address, r.phone as phone, " +
+            "c.cuisineType as cuisineType, location.state as state, location.pin as pin, r.rating as rating, " +
+            "r.restaurantId as restaurantId limit 100")
+    List<RestaurantDetails> getRestaurantDetails(String restaurantName, String cuisineType, String state, String rating);
 
     //Returns retaurant nodes along with average ratings, cuisine nodes and location nodes
     @Query("MATCH (r:Restaurant{restaurantId: {0}})-[s:Serves]->(c:Cuisine), (r)-[loc:Located_At]->(location:Location) " +

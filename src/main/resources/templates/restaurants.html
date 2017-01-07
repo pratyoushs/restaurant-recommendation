@@ -5,60 +5,76 @@
 
 <head>
     <title>Restaurants</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <body>
-<h1>
-    List of Restaurants
-</h1>
+    <div class="container">
+        <div class="row">
+            <h1 class="col-sm-offset-5 col-sm-4">
+                List of Restaurants
+            </h1>
+        </div>
+        <div class="row">
+            <form class="form-inline" action="#" th:action="@{/restaurants}" th:object="${restaurantSearch}" method="post">
+                <div class="form-group">
+                    <label for="inputRestaurantName">Restaurant Name</label>
+                    <input class="form-control" type="text" id="inputRestaurantName" placeholder="Search by Name" th:field="*{restaurantName}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputCuisineType">Cuisine Type</label>
+                    <input class="form-control" type="text" id="inputCuisineType" placeholder="Search by Type" th:field="*{cuisineType}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputState">State</label>
+                    <input class="form-control" type="text" id="inputState" placeholder="Search by State" th:field="*{state}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputRating">Rating</label>
+                    <input class="form-control" type="text" id="inputRating" placeholder="Search by Rating" th:field="*{rating}"/>
+                </div>
+                <input class="btn btn-default" type="submit" value="Search"/>
+            </form>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>State</th>
+                <th>Phone</th>
+                <th>Cuisine</th>
+                <th>Rating</th>
+            </tr>
+            </thead>
+            <tbody>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Address</th>
-        <th>State</th>
-        <th>Phone</th>
-        <th>Cuisine</th>
-        <th>Rating</th>
-    </tr>
-    </thead>
-    <tbody>
+            <tr th:each="restaurant : ${list}">
+                <td th:text="${restaurant.restaurantName}"></td>
+                <td th:text="${restaurant.address}"></td>
+                <td th:text="${restaurant.state}"></td>
+                <td th:text="${restaurant.phone}"></td>
+                <td th:text="${restaurant.cuisineType}"></td>
+                <td th:text="${restaurant.rating}"></td>
+                <td>
+                    <a href="restaurant.html"
+                       th:href="@{|/restaurant/${restaurant.restaurantId}|}"
+                       th:text="Rate">Rate</a>
+                </td>
 
-    <tr th:each="restaurant : ${list}">
-        <td th:text="${restaurant.restaurantName}"></td>
-        <td th:text="${restaurant.address}"></td>
-        <td th:text="${restaurant.state}"></td>
-        <td th:text="${restaurant.phone}"></td>
-        <td th:text="${restaurant.cuisineType}"></td>
-        <td th:text="${restaurant.rating}"></td>
-        <td>
-            <a href="restaurant.html"
-               th:href="@{|/restaurant/${restaurant.restaurantId}|}"
-               th:text="Rate">Rate</a>
-        </td>
+            </tr>
 
-    </tr>
+            </tbody>
+        </table>
+    </div>
 
-    </tbody>
-</table>
-
-<!--<p:dataTable var="restaurant" value="#{list}">
-    <p:column headerText="Name">
-        <h:outputText value="#{restaurant.restaurantName}" />
-    </p:column>
-
-    <p:column headerText="Address">
-        <h:outputText value="#{restaurant.address}" />
-    </p:column>
-
-    <p:column headerText="State">
-        <h:outputText value="#{restaurant.state}" />
-    </p:column>
-
-    <p:column headerText="Cuisine">
-        <h:outputText value="#{restaurant.cuisineType}" />
-    </p:column>
-</p:dataTable>-->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Load jQuery -->
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>
