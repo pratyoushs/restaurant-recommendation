@@ -1,9 +1,8 @@
 package com.webapp.rr.controller;
 
-import com.webapp.rr.domain.Restaurant;
-import com.webapp.rr.domain.RestaurantDetails;
-import com.webapp.rr.domain.RestaurantSearch;
+import com.webapp.rr.domain.*;
 import com.webapp.rr.repo.RestaurantRepository;
+import com.webapp.rr.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

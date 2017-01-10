@@ -54,7 +54,7 @@ public interface RestaurantRepository extends GraphRepository<Restaurant> {
 
     //restaurants liked by friends
     @Query("MATCH (u:User)-[:Friend_Of]->(friend), (friend)-[:Likes]->(r:Restaurant), " +
-            "(r)-[:Located_At]->(location:Location), (r)-[:Serves]->(c:Cuisine) " +
+            "(r)-[:Located_At]->(location:Location), (r)-[:Serves]->(c:Cuisine) WHERE u.userId={0}" +
             "RETURN r.restaurantName as restaurantName, r.address as address, r.phone as phone, " +
             "c.cuisineType as cuisineType, location.state as state, location.pin as pin, r.rating as rating, " +
             "r.restaurantId as restaurantId ORDER BY r.rating DESC " +
