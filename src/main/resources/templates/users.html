@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Users</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<div th:include="/header"></div>
+<body>
+<div class="container">
+    <div class="row">
+        <h1 class="col-sm-offset5 col-sm-4">Users List</h1>
+    </div>
+    <div class="row">
+
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>isFriend</th>
+                <th>Follow/Unfollow</th>
+            </tr>
+
+        </thead>
+        <tbody>
+        <tr th:each="user: ${userFriendsList}">
+            <td th:text="${user.firstName}+${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.gender}"></td>
+            <td th:text="${user.isFriend}"></td>
+            <td>
+               <form class="form-inline" action="#" th:action="@{/users/2}" th:object="${userDetails}" method="post">
+                   <input type="checkbox" th:checked="${user.isFriend}" id="isFriend" name="isFriend"/>
+                   <input th:type="hidden" type="hidden" value="hello" th:value="${user.email}" id="email" name="email"/>
+                   <input class="btn btn-default" type="submit" value="Submit"/>
+               </form>
+            </td>
+        </tr>
+        <tr th:each="user: ${userList}">
+            <td th:text="${user.firstName}+${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.gender}"></td>
+            <td th:text="${user.isFriend}"></td>
+            <td>
+                <form class="form-inline" action="#" th:action="@{/users/2}" th:object="${userDetails}" method="post">
+                    <input type="checkbox" th:checked="${user.isFriend}" id="isFriend" name="isFriend"/>
+                    <input th:type="hidden" type="hidden" value="hello" th:value="${user.email}" id="email" name="email"/>
+                    <input class="btn btn-default" type="submit" value="Submit"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Load jQuery -->
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

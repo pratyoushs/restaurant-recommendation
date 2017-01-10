@@ -19,7 +19,6 @@ public class User {
     private String lastName;
     private String email;
     private String address;
-    private String age;
     private String gender;
     private String userId;
 
@@ -33,7 +32,6 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.address = address;
-        this.age = age;
         this.gender = gender;
         this.userId = userId;
     }
@@ -69,14 +67,6 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
     }
 
     public String getGender() {
