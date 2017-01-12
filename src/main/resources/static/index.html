@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
->
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Welcome!</title>
@@ -9,9 +8,5 @@
     <p>Welcome to Eatout! <a href="/restaurants">here</a></p>
     <p>Checkout restaurants liked by your friends! <a href="/friendrecommendations/2">here</a></p>
     <p>Checkout restaurants recommended for you! <a href="/recommendations/2">here</a></p>
-    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
 </body>
 </html>

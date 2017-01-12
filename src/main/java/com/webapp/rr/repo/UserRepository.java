@@ -32,4 +32,7 @@ public interface UserRepository extends GraphRepository<User> {
     @Query("MATCH (u:User) RETURN u.username as username, u.password as password")
     List<UserDetails> getUserCredentials();
 
+    @Query("MATCH (u:User) WITH COLLECT (u) AS userNodes RETURN toString(size(userNodes)+1)")
+    String getUserId();
+
 }

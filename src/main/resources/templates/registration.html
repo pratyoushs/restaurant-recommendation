@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example </title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<div th:include="/header"></div>
+<body>
+    <div class="container">
+        <div class="row">
+            <p>Create your account.</p>
+        </div>
+        <div class="row">
+            <form class="form-block" action="#" th:action="@{/success}" th:object="${userDetails}" method="post">
+                <div class="form-group">
+                    <label for="inputFirstName">First Name</label>
+                    <input class="form-control" type="text" id="inputFirstName" placeholder="Enter First Name" th:field="*{firstName}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputLastName">Last Name</label>
+                    <input class="form-control" type="text" id="inputLastName" placeholder="Enter Last Name" th:field="*{lastName}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail">Email</label>
+                    <input class="form-control" type="text" id="inputEmail" placeholder="Enter Email" th:field="*{email}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputGender">Gender</label>
+                    <input class="form-control" type="text" id="inputGender" placeholder="Enter Gender" th:field="*{firstName}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail">Username</label>
+                    <input class="form-control" type="text" id="inputUsername" placeholder="Enter Username" th:field="*{username}"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input class="form-control" type="password" id="inputPassword" placeholder="Enter Password" th:field="*{password}"/>
+                </div>
+                <input class="btn btn-default" type="submit" value="Create"/>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
