@@ -37,7 +37,7 @@
             <td th:text="${user.gender}"></td>
             <td th:text="${user.isFriend}"></td>
             <td>
-               <form class="form-inline" action="#" th:action="@{/users/2}" th:object="${userDetails}" method="post">
+               <form class="form-inline" action="#" th:action="@{/users}" th:object="${userDetails}" method="post">
                    <input type="checkbox" th:checked="${user.isFriend}" id="isFriend" name="isFriend"/>
                    <input th:type="hidden" type="hidden" value="hello" th:value="${user.email}" id="email" name="email"/>
                    <input class="btn btn-default" type="submit" value="Submit"/>
@@ -50,7 +50,7 @@
             <td th:text="${user.gender}"></td>
             <td th:text="${user.isFriend}"></td>
             <td>
-                <form class="form-inline" action="#" th:action="@{/users/2}" th:object="${userDetails}" method="post">
+                <form class="form-inline" action="#" th:action="@{/users}" th:object="${userDetails}" method="post">
                     <input type="checkbox" th:checked="${user.isFriend}" id="isFriend" name="isFriend"/>
                     <input th:type="hidden" type="hidden" value="hello" th:value="${user.email}" id="email" name="email"/>
                     <input class="btn btn-default" type="submit" value="Submit"/>

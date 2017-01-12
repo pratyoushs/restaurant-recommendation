@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -36,55 +37,55 @@ public class RestaurantController {
                 restaurantName, cuisine, state, rating));
         return "restaurants";
     }
-    @RequestMapping(value = "/restaurant/{id}", method = RequestMethod.GET)
-    public String restaurant(Model model, @PathVariable String id){
+    @RequestMapping(value = "/restaurant/{rid}", method = RequestMethod.GET)
+    public String restaurant(Model model, @PathVariable String rid){
         String ratingval = null;
-        model.addAttribute("list", restaurantRepository.getRestaurantInfo(id));
+        model.addAttribute("list", restaurantRepository.getRestaurantInfo(rid));
         model.addAttribute("ratingval", ratingval);
         return "restaurant";
     }
 
-    @RequestMapping(value = "/friendrecommendations/{id}", method = RequestMethod.GET)
-    public String friendrecommendations(Model model, @PathVariable String id){
+    @RequestMapping(value = "/friendrecommendations", method = RequestMethod.GET)
+    public String friendrecommendations(Model model, HttpServletRequest httpServletRequest){
         model.addAttribute("restaurantSearch", new RestaurantSearch());
-        model.addAttribute("list", restaurantRepository.getFriendRecommendedRestaurants(id));
+        model.addAttribute("list", restaurantRepository.getFriendRecommendedRestaurants(httpServletRequest.getRemoteUser()));
         return "friendrecommendations";
     }
 
-    @RequestMapping(value = "/friendrecommendations/{id}", method = RequestMethod.POST)
-    public String friendrecommendations(@ModelAttribute RestaurantSearch restaurantSearch, Model model, @PathVariable String id){
+    @RequestMapping(value = "/friendrecommendations", method = RequestMethod.POST)
+    public String friendrecommendations(@ModelAttribute RestaurantSearch restaurantSearch, Model model,HttpServletRequest httpServletRequest){
         String restaurantName = (".*")+(restaurantSearch.getRestaurantName() == null ? "" : restaurantSearch.getRestaurantName()+(".*"));
         String cuisine = (".*")+(restaurantSearch.getCuisineType() == null ? "" : restaurantSearch.getCuisineType()+(".*"));
         String state = (".*")+(restaurantSearch.getState() == null ? "" : restaurantSearch.getState()+(".*"));
         String rating = (".*") + (restaurantSearch.getRating() == null? "" : restaurantSearch.getRating());
-        model.addAttribute("list", restaurantRepository.getFriendRecommendedRestaurants(id, restaurantName, cuisine, state, rating));
+        model.addAttribute("list", restaurantRepository.getFriendRecommendedRestaurants(httpServletRequest.getRemoteUser(), restaurantName, cuisine, state, rating));
         return "friendrecommendations";
     }
 
-    @RequestMapping(value = "/recommendations/{id}", method = RequestMethod.GET)
-    public String recommendations(Model model, @PathVariable String id){
+    @RequestMapping(value = "/recommendations", method = RequestMethod.GET)
+    public String recommendations(Model model, HttpServletRequest httpServletRequest){
         model.addAttribute("restaurantSearch", new RestaurantSearch());
-        model.addAttribute("list", restaurantRepository.getRestaurantRecommendations(id));
+        model.addAttribute("list", restaurantRepository.getRestaurantRecommendations(httpServletRequest.getRemoteUser()));
         return "recommendations";
     }
 
-    @RequestMapping(value = "/recommendations/{id}", method = RequestMethod.POST)
-    public String recommendations(@ModelAttribute RestaurantSearch restaurantSearch, Model model, @PathVariable String id){
+    @RequestMapping(value = "/recommendations", method = RequestMethod.POST)
+    public String recommendations(@ModelAttribute RestaurantSearch restaurantSearch, Model model, HttpServletRequest httpServletRequest){
         String restaurantName = (".*")+(restaurantSearch.getRestaurantName() == null ? "" : restaurantSearch.getRestaurantName()+(".*"));
         String cuisine = (".*")+(restaurantSearch.getCuisineType() == null ? "" : restaurantSearch.getCuisineType()+(".*"));
         String state = (".*")+(restaurantSearch.getState() == null ? "" : restaurantSearch.getState()+(".*"));
         String rating = (".*") + (restaurantSearch.getRating() == null? "" : restaurantSearch.getRating());
         model.addAttribute("list", restaurantRepository.getRestaurantRecommendations(
-                id, restaurantName, cuisine, state, rating));
+                httpServletRequest.getRemoteUser(), restaurantName, cuisine, state, rating));
         return "recommendations";
     }
 
 
     @RequestMapping(value = "/restaurant/giverating/{id}", method = RequestMethod.POST)
-    public String dummy(@RequestParam("ratingval") String ratingval, @PathVariable String id, Model model){
+    public String dummy(@RequestParam("ratingval") String ratingval, @PathVariable String id, Model model, HttpServletRequest httpServletRequest){
         model.addAttribute("ratingval", ratingval);
         System.out.println("ratingval " + ratingval);
-        restaurantRepository.giveRating("2", id, ratingval);
+        restaurantRepository.giveRating(httpServletRequest.getRemoteUser(), id, ratingval);
         return "dummy";
     }
 }
