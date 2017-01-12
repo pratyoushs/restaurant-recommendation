@@ -21,19 +21,23 @@ public class User {
     private String address;
     private String gender;
     private String userId;
-
+    private String username;
+    private String password;
     private User() {
         // Empty constructor required as of Neo4j API 2.0.5
     };
 
 
-    public User(String firstName, String lastName, String email, String address, String age, String gender, String userId) {
+
+    public User(String firstName, String lastName, String email, String address, String age, String gender, String userId, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.address = address;
         this.gender = gender;
         this.userId = userId;
+        this.username = username;
+        this.password = password;
     }
 
 
@@ -83,6 +87,22 @@ public class User {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**

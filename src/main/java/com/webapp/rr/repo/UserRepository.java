@@ -2,6 +2,7 @@ package com.webapp.rr.repo;
 
 import com.webapp.rr.domain.User;
 import com.webapp.rr.domain.UserDetails;
+import org.springframework.data.authentication.UserCredentials;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.annotation.QueryResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
@@ -27,4 +28,8 @@ public interface UserRepository extends GraphRepository<User> {
     @Query("MATCH (u:User)-[f:Friend_Of]->(u2:User) WHERE u.userId={0} AND u2.email={1} " +
             "DELETE f")
     void deleteFriend(String userId, String email);
+
+    @Query("MATCH (u:User) RETURN u.username as username, u.password as password")
+    List<UserDetails> getUserCredentials();
+
 }
