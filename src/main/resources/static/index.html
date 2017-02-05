@@ -1,12 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<style type="text/css">
+    .coverimage {
+        background-image: url('https://s14.postimg.org/ekfk4eaip/restaurant_e1456862749354.jpg');
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <title>Welcome!</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <body>
-    <p>Welcome to Eatout! <a href="/restaurants">here</a></p>
-    <p>Checkout restaurants liked by your friends! <a href="/friendrecommendations/2">here</a></p>
-    <p>Checkout restaurants recommended for you! <a href="/recommendations/2">here</a></p>
+    <div class="coverimage"></div>
+    <div class="container">
+        <div class="row">
+            <p>Get Started!<a href="/restaurants">here</a></p>
+        </div>
+    </div>
 </body>
 </html>

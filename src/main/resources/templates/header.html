@@ -17,6 +17,11 @@
                     <li><a href="/recommendations">My Recommendations</a></li>
                     <li><a href="/friendrecommendations">Friend's Recommendations</a></li>
                     <li><a href="/users">Users</a></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                        <input class="btn btn-primary" type="submit" value="Sign Out"/>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
